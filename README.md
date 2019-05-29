@@ -11,3 +11,11 @@ With the help of https://github.com/billfor/acurite-bridge I was able to recreat
 ### Installation
 - Import Flow into Nodered
 - edit "check device ID, add ID and Key" node to your PWS ID and Key from your device profile on weatherunderground.com
+
+### How it Works
+- The smartHUB sends two different status messages about 20 seconds apart to hubapi.myacurite.com/weatherstation/updateweatherstation
+- The major difference is one contains temp and humitidy the other containes wind direction and rain accumulation.
+- Using DNS make your hub send these requests to your node-red instance.
+- The flow will listen for incoming messages and combine them sending one update to weather underground per minute.
+- The flow also calculates and adds the Dew Point to the message sent to weatherunderground.
+- The flow will then return the needed response json to the smartHUB.
