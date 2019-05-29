@@ -10,4 +10,4 @@ With the help of https://github.com/billfor/acurite-bridge I was able to recreat
 
 ### Installation
 - Import Flow into Nodered
-- edit "add ID and PW" node to your ID and pw from your PWS profile on weatherunderground.com
+- edit "check device ID, add ID and Key" node to your PWS ID and Key from your device profile on weatherunderground.com
