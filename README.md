@@ -21,3 +21,13 @@ With the help of https://github.com/billfor/acurite-bridge I was able to recreat
 - It will store messages and combine them sending only one update to weather underground per minute.
 - The flow also calculates and adds the Dew Point to the payload sent to weatherunderground.
 - The flow will then return the needed response json to the smartHUB.
+
+### Sensor Data
+- Temperature
+- Humiitidy
+- Barmin
+- Wind Direction
+- Wind Speed
+- Dew Point
+- Rain
+- Daily Rain
