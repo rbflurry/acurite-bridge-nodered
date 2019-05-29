@@ -170,7 +170,7 @@
         "id": "39efe2fb.295f6e",
         "type": "function",
         "z": "947b03d4.4b148",
-        "name": "check device ID, add ID and PW",
+        "name": "check device ID, add ID and Key",
         "func": "if(msg.payload.id == \"YOURDEVICEID\")\n\t{\n\t\t msg.payload.id = \"YOURID\";\n         msg.payload.pw = \"YOURKEY\";\n\t}\nreturn msg;\n\n",
         "outputs": 1,
         "noerr": 0,
