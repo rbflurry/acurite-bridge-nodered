@@ -85,7 +85,8 @@
         "wires": [
             [
                 "39efe2fb.295f6e",
-                "aadd0bbf.ea7f18"
+                "aadd0bbf.ea7f18",
+                "b3749e8c.05941"
             ]
         ]
     },
@@ -140,13 +141,13 @@
         "id": "15fa809.3f9507f",
         "type": "debug",
         "z": "947b03d4.4b148",
-        "name": "",
+        "name": "Debug weatherUnderground Response",
         "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "true",
-        "x": 1310,
+        "x": 1420,
         "y": 60,
         "wires": []
     },
@@ -171,7 +172,7 @@
         "type": "function",
         "z": "947b03d4.4b148",
         "name": "check device ID, add ID and Key",
-        "func": "if(msg.payload.id == \"YOURDEVICEID\")\n\t{\n\t\t msg.payload.id = \"YOURID\";\n         msg.payload.pw = \"YOURKEY\";\n\t}\nreturn msg;\n\n",
+        "func": "if(msg.payload.id == \"YOURDEVICEID\") {\n\t\t msg.payload.id = \"YOURID\";\n         msg.payload.pw = \"TYOURKEY\";\n         return msg;\n} else { node.error(\"Received a message from an invalid Device ID\", msg);\n}\n\n",
         "outputs": 1,
         "noerr": 0,
         "x": 530,
@@ -181,5 +182,19 @@
                 "859b710b.f237a"
             ]
         ]
+    },
+    {
+        "id": "b3749e8c.05941",
+        "type": "debug",
+        "z": "947b03d4.4b148",
+        "name": "Debug Hub Messages",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 500,
+        "y": 140,
+        "wires": []
     }
 ]
