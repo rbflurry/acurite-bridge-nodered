@@ -3,7 +3,7 @@ With the help of https://github.com/billfor/acurite-bridge I was able to recreat
 
 
 ### Requirements
-- Node Red running and able to listen on port 80 (either started on port 80 or using ngnix or apache to redirect ports to nodered port 1880)
+- Node Red running and able to listen on port 80 (either start nodered on port 80 or use ngnix/apache to redirect 80 to nodered port 1880)
 - dnsmasq or another way to hijack DNS responses for hupapi.myacurite.com
 - Station ID and PW from Weather Underground
 
