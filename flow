@@ -1,0 +1,169 @@
+[
+    {
+        "id": "947b03d4.4b148",
+        "type": "tab",
+        "label": "Weather Station",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "e451f332.b0d2",
+        "type": "http request",
+        "z": "947b03d4.4b148",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "{{{payload_url}}}",
+        "tls": "",
+        "x": 990,
+        "y": 60,
+        "wires": [
+            [
+                "15fa809.3f9507f"
+            ]
+        ]
+    },
+    {
+        "id": "e6719e58.c5a26",
+        "type": "http response",
+        "z": "947b03d4.4b148",
+        "name": "",
+        "statusCode": "200",
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "x": 880,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "f9d74a01.398788",
+        "type": "template",
+        "z": "947b03d4.4b148",
+        "name": "build hub response",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{\"localtime\":\"{{timestr}}\",\"checkversion\":\"224\"}",
+        "output": "str",
+        "x": 690,
+        "y": 100,
+        "wires": [
+            [
+                "e6719e58.c5a26"
+            ]
+        ]
+    },
+    {
+        "id": "aadd0bbf.ea7f18",
+        "type": "function",
+        "z": "947b03d4.4b148",
+        "name": "get time",
+        "func": "var d = new Date();\nvar n = d.toLocaleTimeString();\nmsg.timestr = n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 500,
+        "y": 100,
+        "wires": [
+            [
+                "f9d74a01.398788"
+            ]
+        ]
+    },
+    {
+        "id": "29124a61.11d876",
+        "type": "http in",
+        "z": "947b03d4.4b148",
+        "name": "",
+        "url": "weatherstation/updateweatherstation",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 220,
+        "y": 80,
+        "wires": [
+            [
+                "aadd0bbf.ea7f18",
+                "859b710b.f237a"
+            ]
+        ]
+    },
+    {
+        "id": "859b710b.f237a",
+        "type": "join",
+        "z": "947b03d4.4b148",
+        "name": "",
+        "mode": "custom",
+        "build": "merged",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "60",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "num",
+        "reduceFixup": "",
+        "x": 490,
+        "y": 60,
+        "wires": [
+            [
+                "c5b2e535.04e208"
+            ]
+        ]
+    },
+    {
+        "id": "46348cc7.486324",
+        "type": "template",
+        "z": "947b03d4.4b148",
+        "name": "",
+        "field": "payload_url",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "https://weatherstation.wunderground.com/weatherstation/updateweatherstation.php?ID=IDHERE&PASSWORD=PASSWORDHERE&dateutc=now&humidity={{payload.humidity}}&tempf={{payload.tempf}}&windspeedmph={{payload.windspeedmph}}&winddir={{payload.winddir}}&rainin={{payload.rainin}}&dailyrainin={{payload.dailyrainin}}&baromin={{payload.baromin}}&dewptf={{payload.dewpoint}}&action=updateraw\n",
+        "output": "str",
+        "x": 820,
+        "y": 60,
+        "wires": [
+            [
+                "e451f332.b0d2"
+            ]
+        ]
+    },
+    {
+        "id": "15fa809.3f9507f",
+        "type": "debug",
+        "z": "947b03d4.4b148",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1150,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "c5b2e535.04e208",
+        "type": "function",
+        "z": "947b03d4.4b148",
+        "name": "add dewpoint",
+        "func": "if(msg.environment !== null)\n\t{\n\t\tvar temp2 = msg.payload.tempf;\n\t\tvar r = msg.payload.humidity;\n\t  \n\t\tif(temp2 !==null && !isNaN(temp2)  && r !==null && !isNaN(r))\n\t   \t{\n\t\t    \n\t\t    var temp = -1.0*temp2;\n\t\t    es = 6.112*Math.exp(-1.0*17.67*temp/(243.5 - temp));\n\t\t    ed = r/100.0*es;\n\t\t    eln = Math.log(ed/6.112);\n\t\t    td = -243.5*eln/(eln - 17.67 );\n\t\t    msg.payload.dewpoint = parseFloat(td.toFixed(2));\n\t\t}\n\t}\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 650,
+        "y": 60,
+        "wires": [
+            [
+                "46348cc7.486324"
+            ]
+        ]
+    }
+]
