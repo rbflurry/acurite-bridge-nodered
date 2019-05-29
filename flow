@@ -15,7 +15,7 @@
         "ret": "txt",
         "url": "{{{payload_url}}}",
         "tls": "",
-        "x": 990,
+        "x": 1110,
         "y": 60,
         "wires": [
             [
@@ -32,7 +32,7 @@
         "headers": {
             "Content-Type": "application/json"
         },
-        "x": 880,
+        "x": 840,
         "y": 100,
         "wires": []
     },
@@ -47,7 +47,7 @@
         "syntax": "mustache",
         "template": "{\"localtime\":\"{{timestr}}\",\"checkversion\":\"224\"}",
         "output": "str",
-        "x": 690,
+        "x": 670,
         "y": 100,
         "wires": [
             [
@@ -113,7 +113,7 @@
         "y": 60,
         "wires": [
             [
-                "c5b2e535.04e208"
+                "2d2fc661.0465da"
             ]
         ]
     },
@@ -126,13 +126,14 @@
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "https://weatherstation.wunderground.com/weatherstation/updateweatherstation.php?ID=IDHERE&PASSWORD=PASSWORDHERE&dateutc=now&humidity={{payload.humidity}}&tempf={{payload.tempf}}&windspeedmph={{payload.windspeedmph}}&winddir={{payload.winddir}}&rainin={{payload.rainin}}&dailyrainin={{payload.dailyrainin}}&baromin={{payload.baromin}}&dewptf={{payload.dewpoint}}&action=updateraw\n",
+        "template": "https://weatherstation.wunderground.com/weatherstation/updateweatherstation.php?ID={{payload.id}}&PASSWORD={{payload.pw}}&dateutc=now&humidity={{payload.humidity}}&tempf={{payload.tempf}}&windspeedmph={{payload.windspeedmph}}&winddir={{payload.winddir}}&rainin={{payload.rainin}}&dailyrainin={{payload.dailyrainin}}&baromin={{payload.baromin}}&dewptf={{payload.dewpoint}}&action=updateraw\n",
         "output": "str",
-        "x": 820,
+        "x": 960,
         "y": 60,
         "wires": [
             [
-                "e451f332.b0d2"
+                "e451f332.b0d2",
+                "15fa809.3f9507f"
             ]
         ]
     },
@@ -146,7 +147,7 @@
         "console": false,
         "tostatus": false,
         "complete": "true",
-        "x": 1150,
+        "x": 1250,
         "y": 60,
         "wires": []
     },
@@ -158,11 +159,27 @@
         "func": "if(msg.environment !== null)\n\t{\n\t\tvar temp2 = msg.payload.tempf;\n\t\tvar r = msg.payload.humidity;\n\t  \n\t\tif(temp2 !==null && !isNaN(temp2)  && r !==null && !isNaN(r))\n\t   \t{\n\t\t    \n\t\t    var temp = -1.0*temp2;\n\t\t    es = 6.112*Math.exp(-1.0*17.67*temp/(243.5 - temp));\n\t\t    ed = r/100.0*es;\n\t\t    eln = Math.log(ed/6.112);\n\t\t    td = -243.5*eln/(eln - 17.67 );\n\t\t    msg.payload.dewpoint = parseFloat(td.toFixed(2));\n\t\t}\n\t}\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
-        "x": 650,
+        "x": 810,
         "y": 60,
         "wires": [
             [
                 "46348cc7.486324"
+            ]
+        ]
+    },
+    {
+        "id": "2d2fc661.0465da",
+        "type": "function",
+        "z": "947b03d4.4b148",
+        "name": "add ID and PW",
+        "func": " msg.payload.id = \"YOURID\";\n msg.payload.pw = \"YOURPW\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 640,
+        "y": 60,
+        "wires": [
+            [
+                "c5b2e535.04e208"
             ]
         ]
     }
