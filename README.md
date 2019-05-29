@@ -16,6 +16,8 @@ With the help of https://github.com/billfor/acurite-bridge I was able to recreat
 - The smartHUB sends two different status messages about 20 seconds apart to hubapi.myacurite.com/weatherstation/updateweatherstation
 - The major difference is one contains temp and humitidy the other containes wind direction and rain accumulation.
 - Using DNS make your hub send these requests to your node-red instance.
-- The flow will listen for incoming messages and combine them sending one update to weather underground per minute.
-- The flow also calculates and adds the Dew Point to the message sent to weatherunderground.
+- The flow will listen for incoming messages and check to make sure they are from your smartHUB.
+- IF the message is from your smartHub it will update the ID and Key for your weatherunderground account.
+- It will store messages and combine them sending only one update to weather underground per minute.
+- The flow also calculates and adds the Dew Point to the payload sent to weatherunderground.
 - The flow will then return the needed response json to the smartHUB.
