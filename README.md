@@ -7,3 +7,6 @@ With the help of https://github.com/billfor/acurite-bridge I was able to recreat
 - dnsmasq or another way to hijack DNS responses for hupapi.myacurite.com
 - Station ID and PW from Weather Underground
 
+### Installation
+- Import Flow into Nodered
+- edit "add ID and PW" node to your ID and pw from your PWS profile on weatherunderground.com
